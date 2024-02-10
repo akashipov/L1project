@@ -24,14 +24,6 @@ func someFunc() {
 }
 
 func main() {
-
-	someFunc()
-
-	fmt.Println(unsafe.StringData(justString))
-	fmt.Println(unsafe.Sizeof(justString))
-	fmt.Println(justString)
-	runtime.GC()
-	var m runtime.MemStats
-	runtime.ReadMemStats(&m)
-	fmt.Printf("Alloc = %v\n", m.Alloc)
+	a := "\U0010FFFF"
+	fmt.Println(a)
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/akashipov/L1project/pointer/pointer"
+	"github.com/akashipov/L1project/task24/pointer"
 )
 
 func main() {
