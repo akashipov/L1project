@@ -89,9 +89,9 @@ func main() {
 	var w sync.WaitGroup
 	w.Add(1)
 	go func() {
+		defer w.Done()
 		defer func() {
 			fmt.Println("It was finished by goexit")
-			w.Done()
 		}()
 		go f()
 		runtime.Goexit()

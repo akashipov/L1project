@@ -11,12 +11,12 @@ import (
 )
 
 func producer(w *sync.WaitGroup, done chan struct{}, r chan int) {
+	defer w.Done()
 loop:
 	for {
 		select {
 		case <-done:
 			close(r)
-			w.Done()
 			break loop
 		default:
 			r <- rand.Intn(10)
@@ -59,12 +59,12 @@ func main() {
 	done := make(chan struct{}, 1)
 	go producer(&w, done, r)
 	go func() {
+		defer w.Done()
 		sigint := make(chan os.Signal, 1)
 		signal.Notify(sigint, syscall.SIGINT, syscall.SIGTERM)
 		sig := <-sigint
 		fmt.Printf("\nSignal: %v\n", sig)
 		done <- struct{}{}
-		w.Done()
 	}()
 	w.Wait()
 }

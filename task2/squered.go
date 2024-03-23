@@ -9,12 +9,12 @@ import (
 )
 
 func worker(w *sync.WaitGroup, i chan int) {
+	defer w.Done()
 	for {
 		x, ok := <-i
 		if ok {
 			fmt.Println(x * x)
 		} else {
-			w.Done()
 			break
 		}
 	}

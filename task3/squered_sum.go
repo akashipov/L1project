@@ -8,12 +8,12 @@ import (
 )
 
 func composer(w *sync.WaitGroup, r chan int) {
+	defer w.Done()
 	s := 0
 	for {
 		x, ok := <-r
 		if !ok {
 			fmt.Println(s)
-			w.Done()
 			break
 		}
 		s += x
@@ -21,6 +21,7 @@ func composer(w *sync.WaitGroup, r chan int) {
 }
 
 func worker(w *sync.WaitGroup, i chan int, r chan int) {
+	defer w.Done()
 	s := 0
 	for {
 		x, ok := <-i
@@ -28,7 +29,6 @@ func worker(w *sync.WaitGroup, i chan int, r chan int) {
 			s += x * x
 		} else {
 			r <- s
-			w.Done()
 			break
 		}
 	}
